@@ -2,26 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html,
+body {
+  @apply bg-black;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.border-hue {
+  @apply border-2;
+  animation: border-hue 10s linear infinite;
+}
+
+/* border hue gradient animation */
+@keyframes border-hue {
+  0% {
+    border-color: hsl(0, 100%, 50%);
+  }
+  25% {
+    border-color: yellow;
+  }
+  50% {
+    border-color: hsl(180, 100%, 50%);
+  }
+  75% {
+    border-color: hsl(270, 100%, 50%);
+  }
+  100% {
+    border-color: hsl(360, 100%, 50%);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* All delay classes will take half the time to start */
+:root {
+  --animate-delay: 0.2s;
 }
