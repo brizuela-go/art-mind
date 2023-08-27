@@ -17,6 +17,8 @@ export default function App({ Component, pageProps }: AppProps) {
           name="description"
           content="Convierte tu hermosa voz en una imagen"
         />
+        {/* link rel manifest */}
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <main
         className={`flex min-h-screen flex-col items-center justify-center p-24 ${inter.className} border-hue `}
