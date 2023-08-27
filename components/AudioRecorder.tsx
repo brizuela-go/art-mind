@@ -161,13 +161,13 @@ const AudioRecorder = () => {
     if (convertedText) {
       magicPrompting();
     }
-  }, [convertedText]);
+  }, [convertedText, magicPrompting]);
 
   useEffect(() => {
     if (magicPromptData) {
       generateImage();
     }
-  }, [magicPromptData]);
+  }, [magicPromptData, generateImage]);
 
   const [hovered, setHovered] = useState(false);
 
