@@ -1,8 +1,4 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { ChangeEvent, useEffect, useState } from "react";
-import TextWriter from "./components/TextWriter";
-import AudioRecorder from "./components/AudioRecorder";
+import { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
