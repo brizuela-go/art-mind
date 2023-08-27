@@ -95,13 +95,16 @@ const AudioRecorder = () => {
     };
 
     try {
-      const res1 = await fetch(`${process.env.RENDER_API_URL}transcribe`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(bodyData),
-      });
+      const res1 = await fetch(
+        `${process.env.NEXT_PUBLIC_RENDER_API_URL}transcribe`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(bodyData),
+        }
+      );
 
       const result1 = await res1.json();
 
@@ -116,13 +119,16 @@ const AudioRecorder = () => {
 
   const magicPrompting = async () => {
     try {
-      const res = await fetch(`${process.env.RENDER_API_URL}magic`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ text: convertedText }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_RENDER_API_URL}magic`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({ text: convertedText }),
+        }
+      );
       const result = await res.json();
       console.log(result);
       setMagicPromptData(result.new_prompt);
@@ -134,7 +140,7 @@ const AudioRecorder = () => {
 
   const generateImage = async () => {
     try {
-      const res = await fetch(`${process.env.RENDER_API_URL}draw`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_RENDER_API_URL}draw`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -276,15 +282,15 @@ const AudioRecorder = () => {
         initialVelocityY={10}
         tweenDuration={5000}
       />
-      <h1 className="text-6xl text-center font-bold ">
+      <h1 className="text-6xl max-sm:text-4xl text-center font-bold ">
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 via-blue-400 to-indigo-500">
           Aquí está tu obra de arte
         </span>{" "}
         <span className="text-dark">🎨</span>
       </h1>
-      <div className=" mt-10 flex justify-center items-center gap-14">
+      <div className=" mt-10 flex justify-center items-center max-sm:flex-col gap-14 max-sm:gap-0">
         <Image
-          className=" rounded-md"
+          className=" rounded-md "
           src={imageData}
           priority
           quality={100}
@@ -293,7 +299,7 @@ const AudioRecorder = () => {
           height={350}
         />
         {/* qr for image data  */}
-        <QRCode value={imageData} size={350} />
+        <QRCode value={imageData} size={350} className="max-sm:hidden" />
       </div>
 
       <Link href="/">
