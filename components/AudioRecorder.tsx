@@ -8,7 +8,7 @@ import QRCode from "react-qr-code";
 import Confetti from "react-confetti";
 import { PropagateLoader } from "react-spinners";
 
-const mimeType = "audio/mp3";
+const mimeType = "audio/webm";
 
 const AudioRecorder = () => {
   const [permission, setPermission] = useState(false);
