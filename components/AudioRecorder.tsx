@@ -95,7 +95,7 @@ const AudioRecorder = () => {
     };
 
     try {
-      const res1 = await fetch("http://localhost:5001/transcribe", {
+      const res1 = await fetch(`${process.env.RENDER_API_URL}transcribe`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -116,7 +116,7 @@ const AudioRecorder = () => {
 
   const magicPrompting = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/magic", {
+      const res = await fetch(`${process.env.RENDER_API_URL}magic`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -134,7 +134,7 @@ const AudioRecorder = () => {
 
   const generateImage = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/draw", {
+      const res = await fetch(`${process.env.RENDER_API_URL}draw`, {
         headers: {
           "Content-Type": "application/json",
         },
