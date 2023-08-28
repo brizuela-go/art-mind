@@ -66,7 +66,7 @@ export default function Home() {
             🎤 Empezar
           </Link>
         </div>
-        <Link prefetch={false} href="/gallery">
+        <Link shallow={true} href="/gallery">
           <button
             onClick={() => setClicked(true)}
             className={`shadow-2xl text-sm btn fixed bottom-7 right-5 ${
