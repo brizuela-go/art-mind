@@ -87,7 +87,7 @@ export default function Gallery({ galleryData }: GalleryProps) {
       </ul>
       {/* button to reload the website */}
       <Link href="/gallery">
-        <button className="btn btn-outline fixed bottom-5 left-7">
+        <button className="btn btn-outline fixed top-5 right-7">
           ¿No ves tu imagen? Presiona aquí
         </button>
       </Link>
