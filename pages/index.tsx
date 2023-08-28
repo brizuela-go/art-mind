@@ -3,6 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   return (
     <>
@@ -66,7 +67,12 @@ export default function Home() {
           </Link>
         </div>
         <Link href="/gallery">
-          <button className="shadow-2xl text-sm btn fixed bottom-7 right-5">
+          <button
+            onClick={() => setClicked(true)}
+            className={`shadow-2xl text-sm btn fixed bottom-7 right-5 ${
+              clicked && "loading"
+            }`}
+          >
             Ir a la Galería 🖼️
           </button>
         </Link>

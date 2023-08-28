@@ -3,10 +3,10 @@ import Image from "next/image";
 import { es } from "date-fns/locale";
 import Link from "next/link";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { db } from "@/utils/firebase";
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const imagesCollection = collection(db, "images");
 
   const startDate = new Date("2023-01-01");

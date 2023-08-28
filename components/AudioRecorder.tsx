@@ -26,6 +26,7 @@ const AudioRecorder = () => {
 
   const [magicPromptData, setMagicPromptData] = useState<string>("");
   const [imageData, setImageData] = useState<string>("");
+  const [clicked, setClicked] = useState(false);
 
   const getMicrophonePermission = async () => {
     if ("MediaRecorder" in window) {
@@ -361,7 +362,12 @@ const AudioRecorder = () => {
         </button>
       </Link>
       <Link href="/gallery">
-        <button className="shadow-2xl text-sm btn fixed bottom-7 right-5">
+        <button
+          onClick={() => setClicked(true)}
+          className={`shadow-2xl text-sm btn fixed bottom-7 right-5 ${
+            clicked && "loading"
+          }`}
+        >
           Ir a la Galería 🖼️
         </button>
       </Link>
