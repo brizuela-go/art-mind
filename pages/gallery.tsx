@@ -76,7 +76,7 @@ export default function Gallery({ galleryData }: GalleryProps) {
                 </p>
                 {/* <p className="text-blue-500 font-semibold mt-1">
                   Magic Prompt: {image.magicPrompt}
-                </p> */}
+                </p> a */}
                 <p className="text-slate-400 mt-2 font-semibold tracking-tighter text-xl">
                   {image.prompt}
                 </p>
