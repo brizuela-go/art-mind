@@ -85,7 +85,7 @@ export default function Gallery({ galleryData }: GalleryProps) {
           </li>
         ))}
       </ul>
-      <ul className=" gap-10 grid grid-cols-1 md:hidden mt-14">
+      <ul className=" gap-10 grid grid-cols-1 sm:hidden mt-14">
         {galleryData.map((image, index) => (
           <li key={image.id}>
             <div className="relative group overflow-hidden rounded-md shadow-lg hover:scale-105 transition duration-200 ease-in-out">
