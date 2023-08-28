@@ -65,6 +65,11 @@ export default function Home() {
             🎤 Empezar
           </Link>
         </div>
+        <Link href="/gallery">
+          <button className="shadow-2xl text-sm btn fixed bottom-7 right-5">
+            Ir a la Galería 🖼️
+          </button>
+        </Link>
       </section>
     </>
   );

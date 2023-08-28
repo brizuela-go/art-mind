@@ -7,6 +7,9 @@ import Image from "next/image";
 import QRCode from "react-qr-code";
 import Confetti from "react-confetti";
 import { PropagateLoader } from "react-spinners";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/utils/firebase";
+import toast, { Toaster } from "react-hot-toast";
 
 const mimeType = "audio/mp3";
 
@@ -169,6 +172,32 @@ const AudioRecorder = () => {
     }
   }, [magicPromptData]);
 
+  const uploadImageUrlToFirebase = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "images"), {
+        url: imageData,
+        date: new Date(),
+        magicPrompt: magicPromptData,
+        prompt: convertedText,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    } finally {
+      setIsSaved(true);
+    }
+  };
+
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleUploadImage = () => {
+    toast.promise(uploadImageUrlToFirebase(), {
+      loading: "Guardando imagen en la galería...",
+      success: "Imagen guardada en la galería",
+      error: "Error al guardar imagen",
+    });
+  };
+
   const [hovered, setHovered] = useState(false);
 
   if (!imageData)
@@ -269,6 +298,15 @@ const AudioRecorder = () => {
 
   return (
     <>
+      <Toaster
+        toastOptions={{
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        }}
+      />
       <Confetti
         className="w-full h-full"
         width={450}
@@ -301,15 +339,30 @@ const AudioRecorder = () => {
         {/* qr for image data  */}
         <QRCode value={imageData} size={350} className="max-sm:hidden" />
       </div>
-
-      <Link href="/">
-        <button className="btn btn-outline hover:bg-gradient-to-r hover:from-slate-200 hover:to-slate-300 hover:border-none mt-10 shadow-2xl hover:shadow-indigo-400">
-          Generar Nueva Imagen
+      <div className="flex justify-center items-center gap-8 max-sm:flex-col">
+        <button
+          onClick={handleUploadImage}
+          className={`${
+            !isSaved &&
+            "btn btn-outline btn-success  hover:border-none mt-10 shadow-2xl hover:shadow-success"
+          } ${isSaved && "btn btn-disabled mt-10"} `}
+        >
+          {isSaved ? "Imagen guardada" : "Guardar Imagen en la Galería"}
+        </button>
+        <Link href="/">
+          <button className="btn btn-outline hover:bg-gradient-to-r hover:from-slate-200 hover:to-slate-300 hover:border-none mt-10 shadow-2xl hover:shadow-indigo-400">
+            Generar Nueva Imagen
+          </button>
+        </Link>
+      </div>
+      <Link href="https://github.com/brizuela-go">
+        <button className="shadow-2xl text-sm btn fixed bottom-7 left-5">
+          Hecho con ❤️ por brizuela-go
         </button>
       </Link>
-      <Link href="https://github.com/brizuela-go">
+      <Link href="/gallery">
         <button className="shadow-2xl text-sm btn fixed bottom-7 right-5">
-          Hecho con ❤️ por brizuela-go
+          Ir a la Galería 🖼️
         </button>
       </Link>
     </>
