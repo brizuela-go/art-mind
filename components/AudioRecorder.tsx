@@ -361,7 +361,7 @@ const AudioRecorder = () => {
           Hecho con ❤️ por brizuela-go
         </button>
       </Link>
-      <Link href="/gallery">
+      <Link replace href="/gallery">
         <button
           onClick={() => setClicked(true)}
           className={`shadow-2xl text-sm btn fixed bottom-7 right-5 ${
