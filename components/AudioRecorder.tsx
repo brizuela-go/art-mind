@@ -6,7 +6,7 @@ import React from "react";
 import Image from "next/image";
 import QRCode from "react-qr-code";
 import Confetti from "react-confetti";
-import { PropagateLoader } from "react-spinners";
+import { BeatLoader, PropagateLoader, PulseLoader } from "react-spinners";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import toast, { Toaster } from "react-hot-toast";
@@ -268,9 +268,17 @@ const AudioRecorder = () => {
               </div>
             )}
             {loading && (
-              <h4 className="text-6xl font-bold text-center tracking-tight animate-pulse">
-                Cargando...
-              </h4>
+              <div className="flex justify-center items-center flex-col">
+                <h4 className="text-center text-4xl font-semibold tracking-tight ">
+                  Cargando...
+                </h4>
+                <BeatLoader
+                  className="mt-14"
+                  color={"#a6adbb"}
+                  loading={loading}
+                  size={20}
+                />
+              </div>
             )}
             {!loading && convertedText && (
               <>
@@ -283,11 +291,11 @@ const AudioRecorder = () => {
                   <TextWriter text={convertedText} delay={10} />
                 </div>
                 <div className="mt-10 flex justify-center items-center">
-                  <PropagateLoader
+                  <BeatLoader
                     className="mt-4 text-center "
                     color={"#a6adbb"}
                     loading={!loading}
-                    size={30}
+                    size={20}
                   />
                 </div>
               </>
@@ -357,7 +365,7 @@ const AudioRecorder = () => {
         </Link>
       </div>
       <Link href="https://github.com/brizuela-go">
-        <button className="shadow-2xl text-sm btn fixed bottom-7 left-5">
+        <button className="shadow-2xl text-sm btn fixed bottom-7 left-5 max-sm:top-7">
           Hecho con ❤️ por brizuela-go
         </button>
       </Link>
