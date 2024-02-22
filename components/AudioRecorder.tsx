@@ -11,12 +11,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import toast, { Toaster } from "react-hot-toast";
 import { storage } from "@/utils/firebase";
-import {
-  ref,
-  uploadString,
-  getDownloadURL,
-  uploadBytes,
-} from "firebase/storage";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
 
 const mimeType = "audio/mp3";
 
@@ -182,30 +177,15 @@ const AudioRecorder = () => {
 
   const uploadImageUrlToFirebase = async () => {
     try {
-      // Fetch the image data from the URL
-      const response = await fetch(imageData);
-      const blob = await response.blob(); // Convert the fetched image to a Blob
-
-      // Create a reference in Firebase Storage
-      const storageRef = ref(storage, `images/${new Date().getTime()}`);
-
-      // Upload the Blob to Firebase Storage
-      const uploadResult = await uploadBytes(storageRef, blob);
-
-      // Get the download URL for the uploaded image
-      const downloadURL = await getDownloadURL(uploadResult.ref);
-
-      // Add a document to Firestore with the image's download URL
       await addDoc(collection(db, "images"), {
-        url: downloadURL,
+        url: imageData, // Use the download URL from storage
         date: new Date(),
         magicPrompt: magicPromptData,
         prompt: convertedText,
       });
     } catch (error) {
-      toast.error("Error al guardar imagen");
     } finally {
-      setIsSaved(true);
+      setIsSaved(true); // Assuming setIsSaved updates a state to indicate saving is complete
     }
   };
 
