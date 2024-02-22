@@ -11,7 +11,12 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import toast, { Toaster } from "react-hot-toast";
 import { storage } from "@/utils/firebase";
-import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadString,
+  getDownloadURL,
+  uploadBytes,
+} from "firebase/storage";
 
 const mimeType = "audio/mp3";
 
@@ -177,25 +182,30 @@ const AudioRecorder = () => {
 
   const uploadImageUrlToFirebase = async () => {
     try {
-      // Step 1: Upload the image to Firebase Storage
-      const storageRef = ref(storage, `images/${new Date().getTime()}`); // Creating a reference to the file's path in storage
-      const uploadResult = await uploadString(storageRef, imageData);
+      // Fetch the image data from the URL
+      const response = await fetch(imageData);
+      const blob = await response.blob(); // Convert the fetched image to a Blob
 
-      // Step 2: Get the download URL
+      // Create a reference in Firebase Storage
+      const storageRef = ref(storage, `images/${new Date().getTime()}`);
+
+      // Upload the Blob to Firebase Storage
+      const uploadResult = await uploadBytes(storageRef, blob);
+
+      // Get the download URL for the uploaded image
       const downloadURL = await getDownloadURL(uploadResult.ref);
 
-      // Step 3: Add document to Firestore with the image download URL
-      const docRef = await addDoc(collection(db, "images"), {
-        url: downloadURL, // Use the download URL from storage
+      // Add a document to Firestore with the image's download URL
+      await addDoc(collection(db, "images"), {
+        url: downloadURL,
         date: new Date(),
         magicPrompt: magicPromptData,
         prompt: convertedText,
       });
-      console.log("Document written with ID: ", docRef.id);
     } catch (error) {
-      console.error("Error adding document: ", error);
+      toast.error("Error al guardar imagen");
     } finally {
-      setIsSaved(true); // Assuming setIsSaved updates a state to indicate saving is complete
+      setIsSaved(true);
     }
   };
 

@@ -9,7 +9,11 @@ const withPWA = require("next-pwa")({
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["oaidalleapiprodscus.blob.core.windows.net", "api.qrserver.com"],
+    domains: [
+      "oaidalleapiprodscus.blob.core.windows.net",
+      "api.qrserver.com",
+      "firebasestorage.googleapis.com",
+    ],
   },
 };
 
