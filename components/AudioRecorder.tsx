@@ -10,6 +10,8 @@ import { BeatLoader, PropagateLoader, PulseLoader } from "react-spinners";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import toast, { Toaster } from "react-hot-toast";
+import { storage } from "@/utils/firebase";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
 
 const mimeType = "audio/mp3";
 
@@ -175,8 +177,16 @@ const AudioRecorder = () => {
 
   const uploadImageUrlToFirebase = async () => {
     try {
+      // Step 1: Upload the image to Firebase Storage
+      const storageRef = ref(storage, `images/${new Date().getTime()}`); // Creating a reference to the file's path in storage
+      const uploadResult = await uploadString(storageRef, imageData);
+
+      // Step 2: Get the download URL
+      const downloadURL = await getDownloadURL(uploadResult.ref);
+
+      // Step 3: Add document to Firestore with the image download URL
       const docRef = await addDoc(collection(db, "images"), {
-        url: imageData,
+        url: downloadURL, // Use the download URL from storage
         date: new Date(),
         magicPrompt: magicPromptData,
         prompt: convertedText,
@@ -185,7 +195,7 @@ const AudioRecorder = () => {
     } catch (error) {
       console.error("Error adding document: ", error);
     } finally {
-      setIsSaved(true);
+      setIsSaved(true); // Assuming setIsSaved updates a state to indicate saving is complete
     }
   };
 
